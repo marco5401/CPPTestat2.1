@@ -4,6 +4,8 @@
 
 #include "Word.h"
 #include <iosfwd>
+#include <vector>
+#include <Word.h>
 namespace kwic {
 
 class Kwic {
@@ -14,6 +16,14 @@ public:
 
 	void remove();
 
+	void sortedInsert(std::vector<word::Word>);
+
+	void sortVector(std::vector<std::string> v);
+
+	void print(std::ostream & out);
+
+private:
+	void printVector(std::ostream & out, std::vector<std::string> v);
 
 };
 

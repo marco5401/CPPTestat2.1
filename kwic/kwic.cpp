@@ -6,23 +6,33 @@
 #include <vector>
 #include <deque>
 #include <algorithm>
+#include <sstream>
 
-std::vector<std::vector<word::Word>> list{};
+std::vector<std::string> list{};
 
 void kwic::Kwic::addSentence(std::istream & in)
 {
 	std::deque<word::Word> deque{};
-	while(!in.eof())
+
+	//while(in.good())
+	while(in.eof())
 	{
-		word::Word word{};
-		in >> word;
-//		in >> word;
+		if(in.fail()){
+			std::cout << "du hureson";
+		}
+		word::Word word{in};
 		deque.push_back(word);
+		std::cout<<"GOOD";
 	}
 	for(unsigned int i = 0; i < deque.size(); i++){
-		std::vector<word::Word> temp;
+		std::string temp{};
 
-		std::copy(deque.begin(), deque.end(), std::back_inserter(temp));
+		for(auto it = deque.begin(); it != deque.end(); it++)
+		{
+			std::ostringstream out{};
+			(*it).print(out);
+			temp += out.str() + " ";
+		}
 
 		list.push_back(temp);
 		word::Word w = deque.front();
@@ -30,4 +40,21 @@ void kwic::Kwic::addSentence(std::istream & in)
 		deque.push_back(w);
 	}
 
+}
+
+void kwic::Kwic::sortVector(std::vector<std::string> v)
+{
+	std::sort(v.begin(), v.end());
+}
+
+void kwic::Kwic::print(std::ostream & out){
+	printVector(out, list);
+}
+
+void kwic::Kwic::printVector(std::ostream & out, std::vector<std::string> v)
+{
+	for(auto it = v.begin(); it != v.end(); it++)
+	{
+		out << (*it);
+	}
 }
