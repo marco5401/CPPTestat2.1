@@ -77,3 +77,6 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+kwic/.settings/language.settings.xml
+kwic/.settings/language.settings.xml
+wordTest/.settings/language.settings.xml
