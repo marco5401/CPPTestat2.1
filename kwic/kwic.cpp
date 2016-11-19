@@ -14,15 +14,10 @@ void kwic::Kwic::addSentence(std::istream & in)
 {
 	std::deque<word::Word> deque{};
 
-	//while(in.good())
-	while(in.eof())
+	while(!in.eof())
 	{
-		if(in.fail()){
-			std::cout << "du hureson";
-		}
 		word::Word word{in};
 		deque.push_back(word);
-		std::cout<<"GOOD";
 	}
 	for(unsigned int i = 0; i < deque.size(); i++){
 		std::string temp{};

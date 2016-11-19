@@ -15,11 +15,11 @@ using namespace std;
 int main() {
 	kwic::Kwic test{};
 
-	//cout << "Eingabe: ";
+	cout << "Eingabe: ";
 
-	std::istringstream in{"Test me now"};
+	//std::istringstream in{"Test me now"};
 
-	test.addSentence(in);
+	test.addSentence(std::cin);
 	cout << "Sentence added, printing now!" << endl;
 	test.print(std::cout);
 
