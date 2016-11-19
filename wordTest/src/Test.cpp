@@ -180,6 +180,18 @@ void testGreaterThan() {
 	ASSERT_EQUAL(true, result);
 }
 
+void testEOF() {
+	std::istringstream in{};
+
+
+	in.setstate(in.eofbit);
+	ASSERT_EQUALM("Test-Error: Stream should be EOF.", in.eof(), true);
+
+	word::Word wordObject{};
+
+	ASSERT_THROWS(wordObject.read(in), std::out_of_range);
+}
+
 bool runAllTests(int argc, char const *argv[]) {
 	cute::suite s { };
 	s.push_back(CUTE(testOutStreamWithOperator));
@@ -193,6 +205,7 @@ bool runAllTests(int argc, char const *argv[]) {
 	s.push_back(CUTE(testEqualOperator));
 	s.push_back(CUTE(testSmallerThan));
 	s.push_back(CUTE(testGreaterThan));
+	s.push_back(CUTE(testEOF));
 	cute::xml_file_opener xmlfile(argc, argv);
 	cute::xml_listener<cute::ide_listener<>> lis(xmlfile.out);
 	auto runner { cute::makeRunner(lis, argc, argv) };

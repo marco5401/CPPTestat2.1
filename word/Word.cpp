@@ -58,7 +58,8 @@ namespace word
 	{
 		// Bei End of File, mache nichts
 		if(is.eof()) {
-			return is;
+			throw std::out_of_range("invalid word");
+			//return is;
 		}
 
 		// Discards leading whitespaces!
