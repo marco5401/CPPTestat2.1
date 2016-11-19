@@ -9,12 +9,19 @@
 #include <iostream>
 #include <Word.h>
 #include <kwic.h>
+#include <sstream>
 using namespace std;
 
 int main() {
 	kwic::Kwic test{};
 
-	test.addSentence(std::cin);
+	//cout << "Eingabe: ";
+
+	std::istringstream in{"Test me now"};
+
+	test.addSentence(in);
+	cout << "Sentence added, printing now!" << endl;
+	test.print(std::cout);
 
 
 	return 0;
