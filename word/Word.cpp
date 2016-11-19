@@ -22,9 +22,6 @@ namespace word
 		: word{}
 	{
 		read(in);
-		if(in.fail()) {
-			throw std::out_of_range("invalid word");
-		}
 	}
 
 	/**
@@ -59,11 +56,7 @@ namespace word
 		// Bei End of File, mache nichts
 		if(is.eof()) {
 			throw std::out_of_range("invalid word");
-			//return is;
 		}
-
-		// Discards leading whitespaces!
-		//is >> std::ws;
 
 		// Discard everything invalid.
 		discardInvalidPrefix(is);
@@ -77,17 +70,23 @@ namespace word
 			readString.push_back(is.get());
 		}
 
-		try{
-			// Make a temporary word-object
-			Word input{readString};
+		if(readString.length() == 0) {
+			is.setstate(std::ios::eofbit);
+			return is;
+		}
+		else {
+			try{
+				// Make a temporary word-object
+				Word input{readString};
 
-			// overwrite the content of this object (COPY-Constructor!)
-			(*this) = input;
-			//clear stream, if read was OK
-			is.clear();
-		} catch(std::out_of_range & e) {
-			//set state of istream to false, if read failed
-			is.setstate(std::ios::failbit | is.rdstate());
+				// overwrite the content of this object (COPY-Constructor!)
+				(*this) = input;
+				//clear stream, if read was OK
+				is.clear();
+			} catch(std::out_of_range & e) {
+				//set state of istream to false, if read failed
+				is.setstate(std::ios::failbit | is.rdstate());
+			}
 		}
 		return is;
 	}

@@ -2,6 +2,7 @@
 #ifndef KWIC_H_
 #define KWIC_H_
 
+#include "Word.h"
 #include <iosfwd>
 namespace kwic {
 

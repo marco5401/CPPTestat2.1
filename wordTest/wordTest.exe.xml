@@ -1,5 +1,5 @@
 <testsuites>
-	<testsuite name="AllTests" tests="12">
+	<testsuite name="AllTests" tests="13">
 		<testcase classname="AllTests" name="testOutStreamWithOperator"/>
 		<testcase classname="AllTests" name="testInStreamWithOperator"/>
 		<testcase classname="AllTests" name="testInStreamReadMethod"/>
@@ -11,6 +11,7 @@
 		<testcase classname="AllTests" name="testEqualOperator"/>
 		<testcase classname="AllTests" name="testSmallerThan"/>
 		<testcase classname="AllTests" name="testGreaterThan"/>
-		<testcase classname="AllTests" name="testEOF"/>
+		<testcase classname="AllTests" name="testEOFWhenCreate"/>
+		<testcase classname="AllTests" name="testReadUntilEOF"/>
 	</testsuite>
 </testsuites>

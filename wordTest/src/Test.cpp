@@ -180,7 +180,7 @@ void testGreaterThan() {
 	ASSERT_EQUAL(true, result);
 }
 
-void testEOF() {
+void testEOFWhenCreate() {
 	std::istringstream in{};
 
 
@@ -190,6 +190,24 @@ void testEOF() {
 	word::Word wordObject{};
 
 	ASSERT_THROWS(wordObject.read(in), std::out_of_range);
+}
+
+void testReadUntilEOF() {
+	std::string sentence{"This is a test"};
+	std::istringstream in{sentence};
+
+	unsigned int retrys{0};
+
+	for(unsigned retrys = 0; retrys < sentence.length(); retrys++) {
+		word::Word wordObject{in};
+		if(in.eof()) {
+			break;
+		}
+	}
+
+	if(retrys >= sentence.length()) {
+		FAILM("The reading is in an endless loop or took too long");
+	}
 }
 
 bool runAllTests(int argc, char const *argv[]) {
@@ -205,7 +223,8 @@ bool runAllTests(int argc, char const *argv[]) {
 	s.push_back(CUTE(testEqualOperator));
 	s.push_back(CUTE(testSmallerThan));
 	s.push_back(CUTE(testGreaterThan));
-	s.push_back(CUTE(testEOF));
+	s.push_back(CUTE(testEOFWhenCreate));
+	s.push_back(CUTE(testReadUntilEOF));
 	cute::xml_file_opener xmlfile(argc, argv);
 	cute::xml_listener<cute::ide_listener<>> lis(xmlfile.out);
 	auto runner { cute::makeRunner(lis, argc, argv) };
