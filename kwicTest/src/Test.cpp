@@ -1,16 +1,52 @@
 #include "kwic.h"
+#include "word.h"
 #include "cute.h"
 #include "ide_listener.h"
 #include "xml_listener.h"
 #include "cute_runner.h"
 #include <iostream>
+#include <sstream>
+#include <vector>
 
+void testReadTextLine()
+{
+	std::istringstream in{"this is a test"};
+	kwic::Kwic kwicObject{};
+
+	std::vector<word::Word> actual{kwicObject.readTextLine(in)};
+
+	std::vector<word::Word> expected{word:Word{"this"}, word:Word{"is"}, word:Word{"a"}, word:Word{"test"}};
+
+
+
+
+}
+
+
+/*
 void testAddingSentence() {
 	std::istringstream in{"This is a test"};
 
 	kwic::Kwic kwic{};
 	kwic.addSentence(in);
+
+	std::string vorlage{"This is a test  is a test  This a test  This is test  This is a  This is a test "};
+	std::ostringstream out{};
+	kwic.print(out);
+
+	ASSERT_EQUAL(vorlage, out.str());
 }
+
+
+void testSortVector(){
+	kwic::Kwic kwicObject{};
+	std::istringstream in{"This is a"};
+	kwicObject.addSentence(in);
+	kwicObject.sort();
+	std::ostringstream out{};
+	kwicObject.print(out);
+}
+*/
 
 bool runAllTests(int argc, char const *argv[]) {
 	cute::suite s { };

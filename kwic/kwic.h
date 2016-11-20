@@ -10,20 +10,17 @@ namespace kwic {
 
 class Kwic {
 public:
-	void read(std::istream & in);
+	std::vector<word::Word> readTextLine(std::istream & in);
 
-	void addSentence(std::istream & in);
+	std::vector<std::vector<word::Word>> createVariatons(std::vector<word::Word>);
 
-	void remove();
+	bool compareVectors(std::vector<word::Word> first, std::vector<word::Word> second);
 
-	void sortedInsert(std::vector<word::Word>);
+	std::vector<std::vector<word::Word>> sortedInsertion(std::vector<std::vector<word::Word>>);
 
-	void sortVector(std::vector<std::string> v);
+	void addTextLine(std::istream & in);
 
 	void print(std::ostream & out);
-
-private:
-	void printVector(std::ostream & out, std::vector<std::string> v);
 
 };
 
