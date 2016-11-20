@@ -17,8 +17,6 @@ int main() {
 
 	cout << "Eingabe: ";
 
-	//std::istringstream in{"Test me now"};
-
 	test.addTextLine(std::cin);
 	cout << "Sentence added, printing now!" << endl;
 	test.print(std::cout);

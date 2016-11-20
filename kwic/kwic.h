@@ -10,7 +10,7 @@ namespace kwic {
 
 class Kwic {
 public:
-	std::vector<word::Word> readTextLine(std::istream & in);
+	std::vector<word::Word> readSentence(std::istream & in);
 
 	std::vector<std::vector<word::Word>> createVariatons(std::vector<word::Word>);
 
@@ -23,6 +23,8 @@ public:
 	void addTextLine(std::istream & in);
 
 	void print(std::ostream & out);
+
+	void printSentence(std::vector<word::Word> sentence, std::ostream & out);
 
 };
 

@@ -1,24 +1,8 @@
 <testsuites>
-	<testsuite name="AllTests" tests="8">
-		<testcase classname="AllTests" name="testReadTextLine">
-			<failure message="..\src\Test.cpp:33 testReadTextLine: true == std::equal(actual.begin(), actual.end(), expected.begin(), expected.end(), [](const auto it1, const auto it2) -&gt; bool{ return (it1 == it2);}) expected:	1	but was:	0	">
-testReadTextLine: true == std::equal(actual.begin(), actual.end(), expected.begin(), expected.end(), [](const auto it1, const auto it2) -&gt; bool{ return (it1 == it2);}) expected:	1	but was:	0	
-			</failure>
-		</testcase>
-		<testcase classname="AllTests" name="testCompareVectorsSame">
-			<failure message="..\src\Test.cpp:93 testCompareVectorsSame: true == kwicObject.compareVectors(v1, v2) expected:	1	but was:	0	">
-testCompareVectorsSame: true == kwicObject.compareVectors(v1, v2) expected:	1	but was:	0	
-			</failure>
-		</testcase>
-		<testcase classname="AllTests" name="testCompareVectorsFistIsSmaller"/>
-		<testcase classname="AllTests" name="testCompareVectorsSecondIsSmaller"/>
-		<testcase classname="AllTests" name="testCompareVectorsFirstIsLexicographicallyBefore">
-			<failure message="..\src\Test.cpp:135 testCompareVectorsFirstIsLexicographicallyBefore: true == kwicObject.compareVectors(v1, v2) expected:	1	but was:	0	">
-testCompareVectorsFirstIsLexicographicallyBefore: true == kwicObject.compareVectors(v1, v2) expected:	1	but was:	0	
-			</failure>
-		</testcase>
-		<testcase classname="AllTests" name="testCompareVectorsSecondIsLexicographicallyBefore"/>
+	<testsuite name="AllTests" tests="4">
+		<testcase classname="AllTests" name="testReadTextLine"/>
 		<testcase classname="AllTests" name="testCreateVariatons"/>
 		<testcase classname="AllTests" name="testSortSentences"/>
+		<testcase classname="AllTests" name="testPrintSentence"/>
 	</testsuite>
 </testsuites>

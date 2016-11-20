@@ -14,7 +14,7 @@ void testReadTextLine()
 	std::istringstream in{"this is a test"};
 	kwic::Kwic kwicObject{};
 
-	std::vector<word::Word> actual{kwicObject.readTextLine(in)};
+	std::vector<word::Word> actual{kwicObject.readSentence(in)};
 
 	//How do I initialize a vector with objects?
 	word::Word one{"this"};
@@ -24,13 +24,7 @@ void testReadTextLine()
 
 	std::vector<word::Word> expected{one, two, three, four};
 
-	/*
-	 * I tested the assertion with the code below and it worked
-	std::vector<word::Word> expected{one, two, three, four};
-	std::vector<word::Word> expected2{one, two, three, four};
-	 */
-
-	ASSERT_EQUAL(true, std::equal(actual.begin(), actual.end(), expected.begin(), expected.end(), [](const auto it1, const auto it2) -> bool{ return (it1 == it2);}));
+	ASSERT_EQUAL(expected, actual);
 
 }
 
@@ -78,80 +72,17 @@ void testSortSentences()
 
 }
 
-//returns true if first is lexicographically after second or equal
-void testCompareVectorsSame()
+void testPrintSentence()
 {
-	word::Word one{"this"};
-	word::Word two{"is"};
-	word::Word three{"a"};
-	word::Word four{"test"};
-	std::vector<word::Word> v1{one, two, three, four};
-	std::vector<word::Word> v2{one, two, three, four};
-
-	kwic::Kwic kwicObject{};
-
-	ASSERT_EQUAL(true, kwicObject.compareVectors(v1, v2));
-}
-
-void testCompareVectorsFistIsSmaller()
-{
-	word::Word one{"this"};
-	word::Word two{"is"};
-	word::Word three{"a"};
-	word::Word four{"test"};
-	std::vector<word::Word> v1{one, two, three};
-	std::vector<word::Word> v2{one, two, three, four};
-
-	kwic::Kwic kwicObject{};
-
-	ASSERT_EQUAL(false, kwicObject.compareVectors(v1, v2));
-}
-
-void testCompareVectorsSecondIsSmaller()
-{
-	word::Word one{"this"};
-	word::Word two{"is"};
-	word::Word three{"a"};
-	word::Word four{"test"};
-	std::vector<word::Word> v1{one, two, three, four};
-	std::vector<word::Word> v2{one, two, three};
-
-	kwic::Kwic kwicObject{};
-
-	ASSERT_EQUAL(true, kwicObject.compareVectors(v1, v2));
-}
-
-void testCompareVectorsFirstIsLexicographicallyBefore()
-{
+	std::ostringstream out{};
 	word::Word one{"aaa"};
-	word::Word two{"is"};
-	word::Word three{"a"};
-	word::Word four{"test"};
-	std::vector<word::Word> v1{one, two, three, four};
-	std::vector<word::Word> v2{four, two, three};
-
+	word::Word two{"bbb"};
+	std::vector<word::Word> v1{one, two};
 	kwic::Kwic kwicObject{};
 
-	ASSERT_EQUAL(true, kwicObject.compareVectors(v1, v2));
-}
+	kwicObject.printSentence(v1, out);
 
-void testCompareVectorsSecondIsLexicographicallyBefore()
-{
-	word::Word one{"aaa"};
-	word::Word two{"is"};
-	word::Word three{"a"};
-	word::Word four{"test"};
-	std::vector<word::Word> v1{four, two, three, four};
-	std::vector<word::Word> v2{one, two, three};
-
-	kwic::Kwic kwicObject{};
-
-	ASSERT_EQUAL(false, kwicObject.compareVectors(v1, v2));
-}
-
-void testSortedInsertion()
-{
-
+	ASSERT_EQUAL("aaa bbb \n", out.str());
 }
 
 
@@ -176,13 +107,9 @@ void testPrint()
 bool runAllTests(int argc, char const *argv[]) {
 	cute::suite s { };
 	s.push_back(CUTE(testReadTextLine));
-	s.push_back(CUTE(testCompareVectorsSame));
-	s.push_back(CUTE(testCompareVectorsFistIsSmaller));
-	s.push_back(CUTE(testCompareVectorsSecondIsSmaller));
-	s.push_back(CUTE(testCompareVectorsFirstIsLexicographicallyBefore));
-	s.push_back(CUTE(testCompareVectorsSecondIsLexicographicallyBefore));
 	s.push_back(CUTE(testCreateVariatons));
 	s.push_back(CUTE(testSortSentences));
+	s.push_back(CUTE(testPrintSentence));
 	cute::xml_file_opener xmlfile(argc, argv);
 	cute::xml_listener<cute::ide_listener<>> lis(xmlfile.out);
 	auto runner { cute::makeRunner(lis, argc, argv) };
