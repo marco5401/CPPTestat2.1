@@ -22,13 +22,11 @@ std::vector<word::Word> kwic::Kwic::readTextLine(std::istream & in)
 std::vector<std::vector<word::Word>> kwic::Kwic::createVariatons(std::vector<word::Word> textLine){
 	std::vector<std::vector<word::Word>> allVariations{};
 
-	auto it = textLine.begin();
-
-	do{
+	for(unsigned int i = 0; i < textLine.size(); i++){
 		allVariations.push_back(textLine);
 		//rotate first element to the end
 		std::rotate(textLine.begin(), textLine.begin()+1, textLine.end());
-	}while(textLine.begin() != it);
+	}
 
 	return allVariations;
 }
@@ -42,9 +40,9 @@ bool kwic::Kwic::compareVectors(std::vector<word::Word> first, std::vector<word:
 	while(firstIt != first.end() && secondIt != second.end())
 	{
 		// return the comparision of the first words that are different
-		if((*firstIt) != (*secondIt))
+		if(firstIt != secondIt)
 		{
-			return (*firstIt) >= (*secondIt);
+			return (firstIt) >= (secondIt);
 		}
 		firstIt++;
 		secondIt++;
@@ -57,7 +55,7 @@ bool kwic::Kwic::compareVectors(std::vector<word::Word> first, std::vector<word:
 	}
 
 	//if the vectors are the same return true
-	if((*first.end()) == (*second.end()))
+	if((first.end()) == (second.end()))
 	{
 		return true;
 	}
@@ -97,11 +95,19 @@ std::vector<std::vector<word::Word>> kwic::Kwic::sortedInsertion(std::vector<std
 	return list;
 }
 
+
 void kwic::Kwic::addTextLine(std::istream & in)
 {
 	std::vector<word::Word> textLine{readTextLine(in)};
 	std::vector<std::vector<word::Word>> toInsert{createVariatons(textLine)};
-	kwic::Kwic::sortedInsertion(toInsert);
+
+	std::sort(toInsert.begin(), toInsert.end());
+	//kwic::Kwic::sortedInsertion(toInsert);
+}
+
+void kwic::Kwic::sortSentences(std::vector<std::vector<word::Word>> & sentences)
+{
+	std::sort(sentences.begin(), sentences.end());
 }
 
 void kwic::Kwic::print(std::ostream & out)

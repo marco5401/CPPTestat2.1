@@ -16,6 +16,8 @@ public:
 
 	bool compareVectors(std::vector<word::Word> first, std::vector<word::Word> second);
 
+	void sortSentences(std::vector<std::vector<word::Word>> & sentences);
+
 	std::vector<std::vector<word::Word>> sortedInsertion(std::vector<std::vector<word::Word>>);
 
 	void addTextLine(std::istream & in);
