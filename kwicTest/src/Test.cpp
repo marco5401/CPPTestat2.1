@@ -1,5 +1,5 @@
 #include "kwic.h"
-#include "word.h"
+#include "Word.h"
 #include "cute.h"
 #include "ide_listener.h"
 #include "xml_listener.h"
@@ -7,6 +7,7 @@
 #include <iostream>
 #include <sstream>
 #include <vector>
+#include <algorithm>
 
 void testReadTextLine()
 {
@@ -15,10 +16,17 @@ void testReadTextLine()
 
 	std::vector<word::Word> actual{kwicObject.readTextLine(in)};
 
-	std::vector<word::Word> expected{word:Word{"this"}, word:Word{"is"}, word:Word{"a"}, word:Word{"test"}};
+	//How do I initialize a vector with objects?
+	word::Word one{"this"};
+	word::Word two{"is"};
+	word::Word three{"a"};
+	word::Word four{"test"};
 
+	std::vector<word::Word> expected{one, two, three, four};
 
+	bool equal = equal(actual.begin(), actual.end(), expected.begin(), expected.end(), [](const auto it1, const auto it2) -> bool{ return (*it1 == *it2);});
 
+	ASSERT_EQUAL(true, equal);
 
 }
 
@@ -50,7 +58,7 @@ void testSortVector(){
 
 bool runAllTests(int argc, char const *argv[]) {
 	cute::suite s { };
-	s.push_back(CUTE(testAddingSentence));
+	s.push_back(CUTE(testReadTextLine));
 	cute::xml_file_opener xmlfile(argc, argv);
 	cute::xml_listener<cute::ide_listener<>> lis(xmlfile.out);
 	auto runner { cute::makeRunner(lis, argc, argv) };
