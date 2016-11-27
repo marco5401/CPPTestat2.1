@@ -19,7 +19,7 @@ class Word
 
 	public:
 	Word() = default;
-	explicit Word(std::string const & word);
+	explicit Word(std::string const word);
 	explicit Word(std::istream & in);
 
 	std::istream & read(std::istream & is);

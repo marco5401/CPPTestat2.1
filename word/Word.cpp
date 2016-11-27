@@ -3,9 +3,10 @@
 
 #include <string>
 #include <algorithm>
-#include <iostream>
+#include <istream>
+#include <ostream>
 #include <vector>
-#include <ctype.h>
+#include <cctype>
 #include <locale>
 
 
@@ -13,7 +14,7 @@ namespace word
 {
 	std::locale loc{};
 
-	Word::Word(std::string word)
+	Word::Word(std::string const word)
 		: word{word}
 	{
 	}
