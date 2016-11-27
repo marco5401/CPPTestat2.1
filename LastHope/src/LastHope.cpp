@@ -6,10 +6,8 @@
 // Description : Hello World in C++, Ansi-style
 //============================================================================
 
+#include "kwic.h"
 #include <iostream>
-#include <Word.h>
-#include <kwic.h>
-#include <sstream>
 using namespace std;
 
 int main() {
