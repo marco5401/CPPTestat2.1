@@ -50,6 +50,7 @@ void testCreateVariatons()
 
 }
 
+/*
 void testSortSentences()
 {
 	word::Word one{"aaa"};
@@ -71,6 +72,7 @@ void testSortSentences()
 	ASSERT_EQUAL(expected, actual);
 
 }
+*/
 
 void testPrintSentence()
 {
@@ -108,7 +110,7 @@ bool runAllTests(int argc, char const *argv[]) {
 	cute::suite s { };
 	s.push_back(CUTE(testReadTextLine));
 	s.push_back(CUTE(testCreateVariatons));
-	s.push_back(CUTE(testSortSentences));
+	//s.push_back(CUTE(testSortSentences));
 	s.push_back(CUTE(testPrintSentence));
 	cute::xml_file_opener xmlfile(argc, argv);
 	cute::xml_listener<cute::ide_listener<>> lis(xmlfile.out);

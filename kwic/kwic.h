@@ -5,18 +5,17 @@
 #include "Word.h"
 #include <iosfwd>
 #include <vector>
-#include <Word.h>
+
 namespace kwic {
 
-class Kwic {
-public:
+struct Kwic {
 	std::vector<word::Word> readSentence(std::istream & in);
 
 	std::vector<std::vector<word::Word>> createVariatons(std::vector<word::Word>);
 
 	bool compareVectors(std::vector<word::Word> first, std::vector<word::Word> second);
 
-	void sortSentences(std::vector<std::vector<word::Word>> & sentences);
+	//void sortSentences(std::vector<std::vector<word::Word>> & sentences);
 
 	std::vector<std::vector<word::Word>> sortedInsertion(std::vector<std::vector<word::Word>>);
 
@@ -29,7 +28,5 @@ public:
 };
 
 }
-
-
 
 #endif /* KWIC_H_ */

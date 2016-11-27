@@ -1,6 +1,7 @@
 #include "Word.h"
 #include "kwic.h"
-#include <iostream>
+#include <istream>
+#include <ostream>
 #include <iterator>
 #include <vector>
 #include <algorithm>
@@ -38,13 +39,14 @@ void kwic::Kwic::addTextLine(std::istream & in)
 	std::vector<std::vector<word::Word>> toInsert{createVariatons(textLine)};
 	std::for_each(toInsert.begin(), toInsert.end(), [](std::vector<word::Word> sentence){list.push_back(sentence);});
 
-	sortSentences(list);
+	std::sort(list.begin(), list.end());
+	//sortSentences(list);
 }
-
+/*
 void kwic::Kwic::sortSentences(std::vector<std::vector<word::Word>> & sentences)
 {
 	std::sort(sentences.begin(), sentences.end());
-}
+}*/
 
 void kwic::Kwic::print(std::ostream & out)
 {
