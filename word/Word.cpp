@@ -8,11 +8,11 @@
 #include <vector>
 #include <cctype>
 #include <locale>
-
+#include <stdexcept>
 
 namespace word
 {
-	std::locale loc{};
+	const std::locale loc{};
 
 	Word::Word(std::string const word)
 		: word{word}
@@ -29,11 +29,6 @@ namespace word
 	 * Checks if the character is one of the accepted ones.
 	 */
 	bool word::Word::isAccepted(char const c) {
-
-		// return false if it's a space.
-		if(c == ' '){
-			return false;
-		}
 
 		return std::isalpha(c, loc);
 	}
@@ -71,23 +66,22 @@ namespace word
 			readString.push_back(is.get());
 		}
 
-		if(readString.length() == 0) {
-			is.setstate(std::ios::eofbit);
+		if(readString.empty()) {
+			is.setstate(std::ios::failbit);
 			return is;
 		}
-		else {
-			try{
-				// Make a temporary word-object
-				Word input{readString};
 
-				// overwrite the content of this object (COPY-Constructor!)
-				(*this) = input;
-				//clear stream, if read was OK
-				is.clear();
-			} catch(std::out_of_range & e) {
-				//set state of istream to false, if read failed
-				is.setstate(std::ios::failbit | is.rdstate());
-			}
+		try{
+			// Make a temporary word-object
+			Word input{readString};
+
+			// overwrite the content of this object (COPY-Constructor!)
+			(*this) = input;
+			//clear stream, if read was OK
+			is.clear();
+		} catch(std::out_of_range & e) {
+			//set state of istream to false, if read failed
+			is.setstate(std::ios::failbit | is.rdstate());
 		}
 		return is;
 	}
