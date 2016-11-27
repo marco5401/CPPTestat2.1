@@ -4,6 +4,7 @@
 #include "xml_listener.h"
 #include "cute_runner.h"
 #include <iostream>
+#include <sstream>
 
 const std::string DEFAULT_FIRST_WORD{"This"}; // This
 const std::string DEFAULT_SECOND_WORD{"is"}; // is
@@ -177,15 +178,14 @@ void testGreaterThan() {
 
 	bool result{wordObject1 > wordObject2};
 
-	ASSERT_EQUAL(true, result);
+	ASSERT(result);
 }
 
 void testEOFWhenCreate() {
 	std::istringstream in{};
 
-
 	in.setstate(in.eofbit);
-	ASSERT_EQUALM("Test-Error: Stream should be EOF.", in.eof(), true);
+	ASSERTM("Test-Error: Stream should be EOF.", in.eof());
 
 	word::Word wordObject{};
 

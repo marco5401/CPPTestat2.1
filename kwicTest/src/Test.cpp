@@ -46,7 +46,7 @@ void testCreateVariatons()
 
 	std::vector<std::vector<word::Word>> expected{v1, v2, v3, v4};
 
-	ASSERT_EQUAL(true, (expected == actual));
+	ASSERT_EQUAL(expected, actual);
 
 }
 
@@ -85,24 +85,6 @@ void testPrintSentence()
 	kwicObject.printSentence(v1, out);
 
 	ASSERT_EQUAL("aaa bbb \n", out.str());
-}
-
-
-
-
-
-void testPrint()
-{
-	/*
-	std::istringstream in{"this is a test"};
-	kwic::Kwic kwicObject{};
-
-	std::ostringstream out{};
-
-	kwicObject.print(out);
-
-	ASSERT_EQUAL(, out.str());
-	 */
 }
 
 
