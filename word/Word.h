@@ -9,9 +9,7 @@
 #define WORD_H_
 
 #include <string>
-#include <vector>
-#include <algorithm>
-#include <iostream>
+#include <iosfwd>
 
 namespace word {
 
@@ -21,7 +19,7 @@ class Word
 
 	public:
 	Word() = default;
-	Word(std::string word);
+	explicit Word(std::string const & word);
 	explicit Word(std::istream & in);
 
 	std::istream & read(std::istream & is);
