@@ -55,7 +55,8 @@ void kwic::Kwic::print(std::ostream & out)
 
 void kwic::Kwic::printSentence(std::vector<word::Word> sentence, std::ostream & out)
 {
-	std::for_each(sentence.begin(), sentence.end(), [&out](word::Word word){out << word << " ";});
+
+	std::copy(sentence.begin(), sentence.end(), std::ostream_iterator<word::Word>{out, " "});
 	out << "\n";
 }
 
