@@ -35,10 +35,6 @@ namespace word
 
 	std::istream & word::Word::read(std::istream & is)
 	{
-		if(is.eof()) {
-			throw std::out_of_range("invalid word");
-		}
-
 		// Discard invalid prefix
 		while(is.good() && !std::isalpha(is.peek())) {
 			is.ignore();
