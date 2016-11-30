@@ -14,7 +14,7 @@ namespace word
 {
 	const std::locale loc{};
 
-	Word::Word(std::string const word)
+	Word::Word(std::string const & word)
 		: word{word}
 	{
 	}
