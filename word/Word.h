@@ -37,7 +37,6 @@ class Word
 
 	private:
 	bool isValidWord(const std::string& word);
-	std::istream & discardInvalidPrefix(std::istream & is);
 };
 
 inline std::istream & operator>>(std::istream & is, Word & word)

@@ -37,22 +37,16 @@ namespace word
 						static_cast<int(*)(int)>(std::isalpha));
 	}
 
-	std::istream & word::Word::discardInvalidPrefix(std::istream & is) {
-
-		while(is.good() && !std::isalpha(is.peek())) {
-			is.ignore();
-		}
-
-		return is;
-	}
-
 	std::istream & word::Word::read(std::istream & is)
 	{
 		if(is.eof()) {
 			throw std::out_of_range("invalid word");
 		}
 
-		discardInvalidPrefix(is);
+		// Discard invalid prefix
+		while(is.good() && !std::isalpha(is.peek())) {
+			is.ignore();
+		}
 
 		std::string buffer{};
 
