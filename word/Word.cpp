@@ -28,22 +28,17 @@ namespace word
 		read(in);
 	}
 
-	bool word::Word::isAccepted(char const c) {
-
-		return std::isalpha(c, loc);
-	}
-
 	bool word::Word::isValidWord(const std::string& word) {
 
-		return !word.empty()
-				&& std::all_of(std::begin(word), std::end(word),
-				static_cast<int(*)(int)>(std::isalpha));
-
+		return !word.empty() &&
+				std::all_of(
+						std::begin(word),
+						std::end(word),
+						static_cast<int(*)(int)>(std::isalpha));
 	}
 
 	std::istream & word::Word::discardInvalidPrefix(std::istream & is) {
 
-		// Skip everything until it fails or the next character is accepted.
 		while(is.good() && !std::isalpha(is.peek())) {
 			is.ignore();
 		}
@@ -59,29 +54,19 @@ namespace word
 
 		discardInvalidPrefix(is);
 
-		std::string readString{};
+		std::string buffer{};
 
-		while(isAccepted(is.peek())) {
-			readString.push_back(is.get());
+		while(is.good() && std::isalpha(is.peek())) {
+			buffer += is.get();
 		}
 
-		if(readString.empty()) {
-			is.setstate(std::ios::failbit);
+		if(isValidWord(buffer)){
+			word = buffer;
+		} else {
+			is.setstate(std::ios_base::failbit);
 			return is;
 		}
 
-		try{
-			// Make a temporary word-object
-			Word input{readString};
-
-			// overwrite the content of this object (COPY-Constructor!)
-			(*this) = input;
-			//clear stream, if read was OK
-			is.clear();
-		} catch(std::out_of_range & e) {
-			//set state of istream to false, if read failed
-			is.setstate(std::ios::failbit | is.rdstate());
-		}
 		return is;
 	}
 
