@@ -5,11 +5,9 @@
 #include <algorithm>
 #include <istream>
 #include <ostream>
-#include <vector>
 #include <cctype>
 #include <locale>
 #include <stdexcept>
-#include <sstream>
 
 namespace word
 {
