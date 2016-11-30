@@ -6,14 +6,10 @@
 #include <istream>
 #include <ostream>
 #include <cctype>
-#include <locale>
 #include <stdexcept>
 
 namespace word
 {
-	const std::locale loc{};
-
-
 	Word::Word(std::string const & word)
 		: word{word}
 	{
@@ -34,7 +30,7 @@ namespace word
 				std::all_of(
 						std::begin(word),
 						std::end(word),
-						static_cast<int(*)(int)>(std::isalpha));
+						static_cast<int(*)(int)>(std::isalpha)); // Pointer auf Funktion mit int Return und int Param.
 	}
 
 	std::istream & word::Word::read(std::istream & is)
