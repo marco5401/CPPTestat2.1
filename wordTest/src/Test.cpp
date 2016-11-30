@@ -210,6 +210,25 @@ void testReadUntilEOF() {
 	}
 }
 
+/**
+ * Week 7 Tests!
+ */
+void test_cannot_create_empty_word() {
+	ASSERT_THROWS(word::Word { "" }, std::invalid_argument);
+}
+
+void test_cannot_create_word_with_space() {
+	ASSERT_THROWS(word::Word { "abc xyz" }, std::invalid_argument);
+}
+void test_cannot_create_word_with_number() {
+	ASSERT_THROWS(word::Word { "abc3xyz" }, std::invalid_argument);
+}
+
+void test_cannot_create_word_with_punctuation() {
+	ASSERT_THROWS(word::Word { "abc.xyz" }, std::invalid_argument);
+}
+
+
 bool runAllTests(int argc, char const *argv[]) {
 	cute::suite s { };
 	s.push_back(CUTE(testOutStreamWithOperator));
@@ -225,6 +244,10 @@ bool runAllTests(int argc, char const *argv[]) {
 	s.push_back(CUTE(testGreaterThan));
 	s.push_back(CUTE(testEOFWhenCreate));
 	s.push_back(CUTE(testReadUntilEOF));
+	s.push_back(CUTE(test_cannot_create_empty_word));
+	s.push_back(CUTE(test_cannot_create_word_with_space));
+	s.push_back(CUTE(test_cannot_create_word_with_number));
+	s.push_back(CUTE(test_cannot_create_word_with_punctuation));
 	cute::xml_file_opener xmlfile(argc, argv);
 	cute::xml_listener<cute::ide_listener<>> lis(xmlfile.out);
 	auto runner { cute::makeRunner(lis, argc, argv) };

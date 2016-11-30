@@ -1,5 +1,5 @@
 <testsuites>
-	<testsuite name="AllTests" tests="13">
+	<testsuite name="AllTests" tests="17">
 		<testcase classname="AllTests" name="testOutStreamWithOperator"/>
 		<testcase classname="AllTests" name="testInStreamWithOperator"/>
 		<testcase classname="AllTests" name="testInStreamReadMethod"/>
@@ -13,5 +13,9 @@
 		<testcase classname="AllTests" name="testGreaterThan"/>
 		<testcase classname="AllTests" name="testEOFWhenCreate"/>
 		<testcase classname="AllTests" name="testReadUntilEOF"/>
+		<testcase classname="AllTests" name="test_cannot_create_empty_word"/>
+		<testcase classname="AllTests" name="test_cannot_create_word_with_space"/>
+		<testcase classname="AllTests" name="test_cannot_create_word_with_number"/>
+		<testcase classname="AllTests" name="test_cannot_create_word_with_punctuation"/>
 	</testsuite>
 </testsuites>
