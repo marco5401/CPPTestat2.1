@@ -44,8 +44,8 @@ namespace word
 	std::istream & word::Word::discardInvalidPrefix(std::istream & is) {
 
 		// Skip everything until it fails or the next character is accepted.
-		while(!is.fail() && !isAccepted(is.peek())) {
-			is.get();
+		while(is.good() && !std::isalpha(is.peek())) {
+			is.ignore();
 		}
 
 		return is;
