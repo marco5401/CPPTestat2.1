@@ -26,7 +26,13 @@ class Word
 	std::ostream & print(std::ostream & os) const;
 
 	bool operator<(const Word & right) const {
-		return this->word.compare(right.word) < 0;
+		return
+				std::lexicographical_compare(
+						std::begin(word), std::end(word),
+						std::begin(right.word), std::end(right.word),
+						[](char l, char r) {
+			return std::tolower(l) < std::tolower(r);
+		});
 	}
 
 	private:
@@ -34,10 +40,6 @@ class Word
 	bool isAccepted(char const c);
 	std::istream & discardInvalidPrefix(std::istream & is);
 };
-
-/**
- * I/O Operator overloadings
- */
 
 inline std::istream & operator>>(std::istream & is, Word & word)
 {
