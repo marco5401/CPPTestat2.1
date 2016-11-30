@@ -25,17 +25,12 @@ class Word
 	std::istream & read(std::istream & is);
 	std::ostream & print(std::ostream & os) const;
 
-	bool operator==(const Word & right) const {
-		return this->word.compare(right.word) == 0;
-	}
-
-
 	bool operator<(const Word & right) const {
 		return this->word.compare(right.word) < 0;
 	}
 
-
 	private:
+	bool isValidWord(const std::string& word);
 	bool isAccepted(char const c);
 	std::istream & discardInvalidPrefix(std::istream & is);
 };
@@ -52,6 +47,10 @@ inline std::istream & operator>>(std::istream & is, Word & word)
 inline std::ostream & operator<<(std::ostream & os, Word const & word)
 {
 	return word.print(os);
+}
+
+inline bool operator==(const Word & left, const Word & right) {
+	return !(left < right) && !(right < left);
 }
 
 inline bool operator!=(const Word & left, const Word & right) {

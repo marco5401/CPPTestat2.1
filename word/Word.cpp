@@ -9,14 +9,19 @@
 #include <cctype>
 #include <locale>
 #include <stdexcept>
+#include <sstream>
 
 namespace word
 {
 	const std::locale loc{};
 
+
 	Word::Word(std::string const & word)
 		: word{word}
 	{
+		if(!isValidWord(word)) {
+			throw std::invalid_argument("invalid word");
+		}
 	}
 
 	Word::Word(std::istream & in)
@@ -31,6 +36,14 @@ namespace word
 	bool word::Word::isAccepted(char const c) {
 
 		return std::isalpha(c, loc);
+	}
+
+	bool word::Word::isValidWord(const std::string& word) {
+
+		return !word.empty()
+				&& std::all_of(std::begin(word), std::end(word),
+				static_cast<int(*)(int)>(std::isalpha));
+
 	}
 
 	/**
