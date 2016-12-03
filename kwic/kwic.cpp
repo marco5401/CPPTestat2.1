@@ -1,7 +1,6 @@
 #include "Word.h"
 #include "kwic.h"
-#include <istream>
-#include <ostream>
+
 #include <iterator>
 #include <vector>
 #include <algorithm>
@@ -11,48 +10,51 @@
 
 using word::Word;
 using line = std::vector<Word>;
+using sorted_lines = std::set<line>;
+using unsorted_lines = std::vector<line>;
 
-std::vector<line> readLines(std::istream & in)
+unsorted_lines readLines(std::istream & in)
 {
-	std::vector<line> allInputLines{};
-	std::string input{};
-	while(std::getline(in, input))
-		{
-			std::istringstream lineStream{input};
-			std::istream_iterator<Word> wordIt{lineStream}, eof{};
-			allInputLines.push_back(line{wordIt, eof});				//Vector constructor is overloaded with a iterator range
-		}
-	return allInputLines;
+	unsorted_lines all_input_lines{};
+	std::string input_line{};
+	while(std::getline(in, input_line))
+	{
+		std::istringstream line_stream{input_line};
+		std::istream_iterator<Word> word_it{line_stream}, eof{};
+		all_input_lines.push_back(line{word_it, eof});
+	}
+	return all_input_lines;
 }
 
-std::set<line> rotateLines(std::vector<line> const & inputLines)
+sorted_lines rotate_lines(unsorted_lines const & input_lines)
 {
-	std::set<line> rotatedLines{};
-	for_each(inputLines.begin(), inputLines.end(), [&](line lineToRotate)
-	{
-		for (auto it = lineToRotate.begin(); it != lineToRotate.end(); it++)
-		{
-			line rotated_line{lineToRotate.size()};
-			std::rotate_copy( std::begin(lineToRotate), it, std::end(lineToRotate), std::begin(rotated_line));
+	sorted_lines rotated_lines{};
+	for_each(begin(input_lines), end(input_lines), [&](line line_to_rotate) {
+		for (auto it = begin(line_to_rotate); it != end(line_to_rotate); it++) {
+			line rotated_line{line_to_rotate.size()};
+			std::rotate_copy(
+					std::begin(line_to_rotate), it, std::end(line_to_rotate),
+					std::begin(rotated_line));
+				rotated_lines.insert(rotated_line);
 		}
 	});
-	return rotatedLines;
+	return rotated_lines;
 }
 
-
-
-void kwic::kwic(std:: istream & in, std::ostream & out)
+void kwic::kwic(std::istream & input, std::ostream & output)
 {
-	std::vector<line> inputLines = readLines(in);
-	std::set<line> rotatedLines = rotateLines(inputLines);
+	unsorted_lines input_lines = readLines(input);
+	sorted_lines rotated_lines = rotate_lines(input_lines);
 	std::copy(
-			std::begin(rotatedLines),
-			std::end(rotatedLines),
-			std::ostream_iterator<line>{out, "\n"});
+			std::begin(rotated_lines),
+			std::end(rotated_lines),
+			std::ostream_iterator<line>{output, "\n"});
 }
 
-namespace word {
-	std::ostream & operator<<(std::ostream & os, line const & l) {
+namespace word
+{
+	std::ostream & operator<<(std::ostream & os, line const & l)
+	{
 		std::copy(
 				std::begin(l), std::end(l),
 				std::ostream_iterator<Word>{os, " "});

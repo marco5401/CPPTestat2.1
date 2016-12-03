@@ -17,17 +17,33 @@ void testEmptyInput(){
 	ASSERT_EQUAL("", out.str());
 }
 
+void testSpecialCharOnly(){
+	std::istringstream in{"1234!!! 13241234"};
+	std::ostringstream out{};
+	kwic::kwic(in, out);
+	ASSERT_EQUAL("", out.str());
+}
+
 void testWithInput(){
 	std::istringstream in{"This is"};
 	std::ostringstream out{};
 	kwic::kwic(in, out);
-	ASSERT_EQUAL("is This /n This is", out.str());
+	ASSERT_EQUAL("is This \nThis is \n", out.str());
+}
+
+void testSpecialCharacters(){
+	std::istringstream in{"This213!!234 !!!is12341324"};
+	std::ostringstream out{};
+	kwic::kwic(in, out);
+	ASSERT_EQUAL("is This \nThis is \n", out.str());
 }
 
 bool runAllTests(int argc, char const *argv[]) {
 	cute::suite s { };
 	s.push_back(CUTE(testEmptyInput));
 	s.push_back(CUTE(testWithInput));
+	s.push_back(CUTE(testSpecialCharacters));
+	s.push_back(CUTE(testSpecialCharOnly));
 	cute::xml_file_opener xmlfile(argc, argv);
 	cute::xml_listener<cute::ide_listener<>> lis(xmlfile.out);
 	auto runner { cute::makeRunner(lis, argc, argv) };
