@@ -8,17 +8,7 @@
 
 #include "kwic.h"
 #include <iostream>
-using namespace std;
 
 int main() {
-	kwic::Kwic test{};
-
-	cout << "Eingabe: ";
-
-	test.addTextLine(std::cin);
-	cout << "Sentence added, printing now!" << endl;
-	test.print(std::cout);
-
-
-	return 0;
+	kwic::kwic(std::cin, std::cout);
 }

@@ -2,30 +2,11 @@
 #ifndef KWIC_H_
 #define KWIC_H_
 
-#include "Word.h"
 #include <iosfwd>
-#include <vector>
 
 namespace kwic {
 
-struct Kwic {
-	std::vector<word::Word> readSentence(std::istream & in);
-
-	std::vector<std::vector<word::Word>> createVariatons(std::vector<word::Word>);
-
-	bool compareVectors(std::vector<word::Word> first, std::vector<word::Word> second);
-
-	//void sortSentences(std::vector<std::vector<word::Word>> & sentences);
-
-	std::vector<std::vector<word::Word>> sortedInsertion(std::vector<std::vector<word::Word>>);
-
-	void addTextLine(std::istream & in);
-
-	void print(std::ostream & out);
-
-	void printSentence(std::vector<word::Word> sentence, std::ostream & out);
-
-};
+void kwic(std::istream & in, std::ostream & out);
 
 }
 

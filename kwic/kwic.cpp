@@ -6,57 +6,56 @@
 #include <vector>
 #include <algorithm>
 #include <sstream>
+#include <set>
+#include <string>
 
-std::vector<std::vector<word::Word>> list{};
+using word::Word;
+using line = std::vector<Word>;
 
-std::vector<word::Word> kwic::Kwic::readSentence(std::istream & in)
+std::vector<line> readLines(std::istream & in)
 {
-	std::vector<word::Word> textLine{};
-	while(!in.eof())
+	std::vector<line> allInputLines{};
+	std::string input{};
+	while(std::getline(in, input))
 		{
-			word::Word word{in};
-			if(in.eof()) break; // HACK this is a workaround because of a /n word that is generated
-			textLine.push_back(word);
+			std::istringstream lineStream{input};
+			std::istream_iterator<Word> wordIt{lineStream}, eof{};
+			allInputLines.push_back(line{wordIt, eof});				//Vector constructor is overloaded with a iterator range
 		}
-	return textLine;
+	return allInputLines;
 }
 
-std::vector<std::vector<word::Word>> kwic::Kwic::createVariatons(std::vector<word::Word> textLine){
-	std::vector<std::vector<word::Word>> allVariations{};
+std::multiset<line> rotateLines(std::vector<line> const & inputLines)
+{
+	std::multiset<line> rotatedLines{};
+	for_each(inputLines.begin(), inputLines.end(), [&](line lineToRotate)
+	{
+		for (auto it = lineToRotate.begin(); it != lineToRotate.end(); it++)
+		{
+			line rotated_line{lineToRotate.size()};
+			std::rotate_copy( std::begin(lineToRotate), it, std::end(lineToRotate), std::begin(rotated_line));
+		}
+	});
+	return rotatedLines;
+}
 
-	for(unsigned int i = 0; i < textLine.size(); i++){
-		allVariations.push_back(textLine);
-		//rotate first element to the end
-		std::rotate(textLine.begin(), textLine.begin()+1, textLine.end());
+
+
+void kwic::kwic(std:: istream & in, std::ostream & out)
+{
+	std::vector<line> inputLines = readLines(in);
+	std::multiset<line> rotatedLines = rotateLines(inputLines);
+	std::copy(
+			std::begin(rotatedLines),
+			std::end(rotatedLines),
+			std::ostream_iterator<line>{out, "\n"});
+}
+
+namespace word {
+	std::ostream & operator<<(std::ostream & os, line const & l) {
+		std::copy(
+				std::begin(l), std::end(l),
+				std::ostream_iterator<Word>{os, " "});
+		return os;
 	}
-
-	return allVariations;
 }
-
-void kwic::Kwic::addTextLine(std::istream & in)
-{
-	std::vector<word::Word> textLine{readSentence(in)};
-	std::vector<std::vector<word::Word>> toInsert{createVariatons(textLine)};
-	std::for_each(toInsert.begin(), toInsert.end(), [](std::vector<word::Word> sentence){list.push_back(sentence);});
-
-	std::sort(list.begin(), list.end());
-	//sortSentences(list);
-}
-/*
-void kwic::Kwic::sortSentences(std::vector<std::vector<word::Word>> & sentences)
-{
-	std::sort(sentences.begin(), sentences.end());
-}*/
-
-void kwic::Kwic::print(std::ostream & out)
-{
-	std::for_each(list.begin(), list.end(), [&](std::vector<word::Word> sentence){printSentence(sentence, out);});
-}
-
-void kwic::Kwic::printSentence(std::vector<word::Word> sentence, std::ostream & out)
-{
-
-	std::copy(sentence.begin(), sentence.end(), std::ostream_iterator<word::Word>{out, " "});
-	out << "\n";
-}
-

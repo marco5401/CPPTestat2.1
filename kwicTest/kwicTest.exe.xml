@@ -1,7 +1,10 @@
 <testsuites>
-	<testsuite name="AllTests" tests="3">
-		<testcase classname="AllTests" name="testReadTextLine"/>
-		<testcase classname="AllTests" name="testCreateVariatons"/>
-		<testcase classname="AllTests" name="testPrintSentence"/>
+	<testsuite name="AllTests" tests="2">
+		<testcase classname="AllTests" name="testEmptyInput"/>
+		<testcase classname="AllTests" name="testWithInput">
+			<failure message="..\src\Test.cpp:24 testWithInput: &quot;is This /n This is&quot; == out.str() expected:	is This /n This is	but was:		">
+testWithInput: &quot;is This /n This is&quot; == out.str() expected:	is This /n This is	but was:		
+			</failure>
+		</testcase>
 	</testsuite>
 </testsuites>

@@ -9,91 +9,25 @@
 #include <vector>
 #include <algorithm>
 
-void testReadTextLine()
-{
-	std::istringstream in{"this is a test"};
-	kwic::Kwic kwicObject{};
 
-	std::vector<word::Word> actual{kwicObject.readSentence(in)};
-
-	//How do I initialize a vector with objects?
-	word::Word one{"this"};
-	word::Word two{"is"};
-	word::Word three{"a"};
-	word::Word four{"test"};
-
-	std::vector<word::Word> expected{one, two, three, four};
-
-	ASSERT_EQUAL(expected, actual);
-
-}
-
-void testCreateVariatons()
-{
-	word::Word one{"this"};
-	word::Word two{"is"};
-	word::Word three{"a"};
-	word::Word four{"test"};
-
-	std::vector<word::Word> v1{one, two, three, four};
-
-	kwic::Kwic kwicObject{};
-	std::vector<std::vector<word::Word>> actual{kwicObject.createVariatons(v1)};
-
-	std::vector<word::Word> v2{two, three, four, one};
-	std::vector<word::Word> v3{three, four, one, two};
-	std::vector<word::Word> v4{four, one, two, three};
-
-	std::vector<std::vector<word::Word>> expected{v1, v2, v3, v4};
-
-	ASSERT_EQUAL(expected, actual);
-
-}
-
-/*
-void testSortSentences()
-{
-	word::Word one{"aaa"};
-	word::Word two{"bbb"};
-	word::Word three{"ccc"};
-	word::Word four{"ddd"};
-
-	std::vector<word::Word> v1{one, two, three, four};
-	std::vector<word::Word> v2{two, three, four, one};
-	std::vector<word::Word> v3{three, four, one, two};
-	std::vector<word::Word> v4{four, one, two, three};
-
-	std::vector<std::vector<word::Word>> actual{v3, v1, v2, v4};
-	std::vector<std::vector<word::Word>> expected{v1, v2, v3, v4};
-
-	kwic::Kwic kwicObject{};
-	kwicObject.sortSentences(actual);
-
-	ASSERT_EQUAL(expected, actual);
-
-}
-*/
-
-void testPrintSentence()
-{
+void testEmptyInput(){
+	std::istringstream in{};
 	std::ostringstream out{};
-	word::Word one{"aaa"};
-	word::Word two{"bbb"};
-	std::vector<word::Word> v1{one, two};
-	kwic::Kwic kwicObject{};
-
-	kwicObject.printSentence(v1, out);
-
-	ASSERT_EQUAL("aaa bbb \n", out.str());
+	kwic::kwic(in, out);
+	ASSERT_EQUAL("", out.str());
 }
 
+void testWithInput(){
+	std::istringstream in{"This is"};
+	std::ostringstream out{};
+	kwic::kwic(in, out);
+	ASSERT_EQUAL("is This /n This is", out.str());
+}
 
 bool runAllTests(int argc, char const *argv[]) {
 	cute::suite s { };
-	s.push_back(CUTE(testReadTextLine));
-	s.push_back(CUTE(testCreateVariatons));
-	//s.push_back(CUTE(testSortSentences));
-	s.push_back(CUTE(testPrintSentence));
+	s.push_back(CUTE(testEmptyInput));
+	s.push_back(CUTE(testWithInput));
 	cute::xml_file_opener xmlfile(argc, argv);
 	cute::xml_listener<cute::ide_listener<>> lis(xmlfile.out);
 	auto runner { cute::makeRunner(lis, argc, argv) };
