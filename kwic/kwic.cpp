@@ -25,9 +25,9 @@ std::vector<line> readLines(std::istream & in)
 	return allInputLines;
 }
 
-std::multiset<line> rotateLines(std::vector<line> const & inputLines)
+std::set<line> rotateLines(std::vector<line> const & inputLines)
 {
-	std::multiset<line> rotatedLines{};
+	std::set<line> rotatedLines{};
 	for_each(inputLines.begin(), inputLines.end(), [&](line lineToRotate)
 	{
 		for (auto it = lineToRotate.begin(); it != lineToRotate.end(); it++)
@@ -44,7 +44,7 @@ std::multiset<line> rotateLines(std::vector<line> const & inputLines)
 void kwic::kwic(std:: istream & in, std::ostream & out)
 {
 	std::vector<line> inputLines = readLines(in);
-	std::multiset<line> rotatedLines = rotateLines(inputLines);
+	std::set<line> rotatedLines = rotateLines(inputLines);
 	std::copy(
 			std::begin(rotatedLines),
 			std::end(rotatedLines),
