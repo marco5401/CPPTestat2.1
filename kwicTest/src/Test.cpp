@@ -38,12 +38,20 @@ void testSpecialCharacters(){
 	ASSERT_EQUAL("is This \nThis is \n", out.str());
 }
 
+void testMultipleLines(){
+	std::istringstream in{"This is\n hallo du"};
+	std::ostringstream out{};
+	kwic::kwic(in, out);
+	ASSERT_EQUAL("du hallo \nhallo du \nis This \nThis is \n", out.str());
+}
+
 bool runAllTests(int argc, char const *argv[]) {
 	cute::suite s { };
 	s.push_back(CUTE(testEmptyInput));
 	s.push_back(CUTE(testWithInput));
 	s.push_back(CUTE(testSpecialCharacters));
 	s.push_back(CUTE(testSpecialCharOnly));
+	s.push_back(CUTE(testMultipleLines));
 	cute::xml_file_opener xmlfile(argc, argv);
 	cute::xml_listener<cute::ide_listener<>> lis(xmlfile.out);
 	auto runner { cute::makeRunner(lis, argc, argv) };

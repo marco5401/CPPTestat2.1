@@ -1,8 +1,9 @@
 <testsuites>
-	<testsuite name="AllTests" tests="4">
+	<testsuite name="AllTests" tests="5">
 		<testcase classname="AllTests" name="testEmptyInput"/>
 		<testcase classname="AllTests" name="testWithInput"/>
 		<testcase classname="AllTests" name="testSpecialCharacters"/>
 		<testcase classname="AllTests" name="testSpecialCharOnly"/>
+		<testcase classname="AllTests" name="testMultipleLines"/>
 	</testsuite>
 </testsuites>
